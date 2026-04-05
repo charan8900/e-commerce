@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexBuy | Electronics, Clothing & Essentials</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo" onclick="showView('shop')">
+                NEX<span>BUY</span>
+            </div>
+            
+            <div class="nav-menu">
+                <button class="nav-btn active" onclick="filterCategory('All', this)">All</button>
+                <button class="nav-btn" onclick="filterCategory('Electronics', this)">Electronics</button>
+                <button class="nav-btn" onclick="filterCategory('Clothing', this)">Clothing</button>
+                <button class="nav-btn" onclick="filterCategory('Essentials', this)">Essentials</button>
+            </div>
+
+            <div class="nav-actions">
+                <div class="search-bar">
+                    <ion-icon name="search-outline"></ion-icon>
+                    <input type="text" id="search-input" placeholder="Search products...">
+                </div>
+                <button class="cart-icon-btn" onclick="toggleCart()">
+                    <ion-icon name="cart-outline"></ion-icon>
+                    <span id="cart-badge" class="badge">0</span>
+                </button>
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </button>
+            </div>
+        </div>
+        <div class="mobile-nav" id="mobile-nav">
+            <button class="nav-btn active" onclick="filterCategory('All', this)">All</button>
+            <button class="nav-btn" onclick="filterCategory('Electronics', this)">Electronics</button>
+            <button class="nav-btn" onclick="filterCategory('Clothing', this)">Clothing</button>
+            <button class="nav-btn" onclick="filterCategory('Essentials', this)">Essentials</button>
+            <div style="padding: 1rem;">
+               <input type="text" id="mobile-search-input" placeholder="Search..." style="width:100%; padding:0.5rem; border-radius:8px; border:1px solid #ddd;">
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- View: Home/Shop -->
+        <section id="view-shop" class="view active">
+            <div class="hero-banner">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1>Elevate Your Lifestyle</h1>
+                    <p>Discover the latest in tech, fashion, and daily essentials with our carefully curated collections.</p>
+                    <button class="btn btn-primary" onclick="document.getElementById('products-section').scrollIntoView({behavior: 'smooth'})">Shop Now</button>
+                </div>
+            </div>
+
+            <div class="container section-padding" id="products-section">
+                <div class="section-header">
+                    <h2 id="current-category-title">Featured Products</h2>
+                    <p>Find what you need, securely and with style.</p>
+                </div>
+
+                <div class="product-grid" id="product-grid">
+                    <!-- Products dynamically rendered here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- View: Checkout -->
+        <section id="view-checkout" class="view">
+            <div class="container section-padding">
+                <button class="btn-back" onclick="showView('shop')">
+                    <ion-icon name="arrow-back-outline"></ion-icon> Back to Shop
+                </button>
+
+                <div class="checkout-layout">
+                    <div class="checkout-form-container glass-card">
+                        <h2 class="form-title">Secure Checkout</h2>
+                        <form id="checkout-form">
+                            <div class="form-section">
+                                <h3>Shipping Information</h3>
+                                <div class="form-group row">
+                                    <div class="input-col">
+                                        <label>First Name</label>
+                                        <input type="text" required placeholder="John">
+                                    </div>
+                                    <div class="input-col">
+                                        <label>Last Name</label>
+                                        <input type="text" required placeholder="Doe">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <input type="email" required placeholder="john@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label>Address</label>
+                                    <input type="text" required placeholder="123 Main St.">
+                                </div>
+                                <div class="form-group row">
+                                    <div class="input-col">
+                                        <label>City</label>
+                                        <input type="text" required placeholder="New York">
+                                    </div>
+                                    <div class="input-col">
+                                        <label>Zip Code</label>
+                                        <input type="text" required placeholder="10001">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section">
+                                <h3>Payment Method</h3>
+                                <div class="payment-methods">
+                                    <label class="payment-option border-active" onclick="selectPayment(this)">
+                                        <input type="radio" name="payment" checked>
+                                        <span>Credit Card</span>
+                                        <ion-icon name="card-outline"></ion-icon>
+                                    </label>
+                                    <label class="payment-option" onclick="selectPayment(this)">
+                                        <input type="radio" name="payment">
+                                        <span>PayPal</span>
+                                        <ion-icon name="logo-paypal"></ion-icon>
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label>Card Number</label>
+                                    <input type="text" required placeholder="0000 0000 0000 0000" maxlength="19">
+                                </div>
+                                <div class="form-group row">
+                                    <div class="input-col">
+                                        <label>Expiry Date</label>
+                                        <input type="text" required placeholder="MM/YY">
+                                    </div>
+                                    <div class="input-col">
+                                        <label>CVC</label>
+                                        <input type="text" required placeholder="123" maxlength="4">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100 checkout-submit-btn">Pay Now</button>
+                        </form>
+                    </div>
+
+                    <!-- Checkout Summary Side -->
+                    <div class="checkout-summary-container glass-card">
+                        <h3>Order Summary</h3>
+                        <div id="checkout-items" class="checkout-items-list">
+                            <!-- Populated dynamically -->
+                        </div>
+                        <div class="totals-block">
+                            <div class="total-row"><span>Subtotal:</span> <span id="co-subtotal">$0.00</span></div>
+                            <div class="total-row"><span>Shipping:</span> <span id="co-shipping">$5.00</span></div>
+                            <div class="total-row"><span>Tax (8%):</span> <span id="co-tax">$0.00</span></div>
+                            <div class="total-row grand-total"><span>Total:</span> <span id="co-total">$0.00</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- View: Success Details -->
+        <section id="view-success" class="view">
+            <div class="container section-padding success-container text-center">
+                <div class="success-icon pulse-animation">
+                    <ion-icon name="checkmark-circle"></ion-icon>
+                </div>
+                <h2>Payment Successful!</h2>
+                <p>Thank you for your order. We are processing it and will send a confirmation email shortly.</p>
+                <button class="btn btn-primary" onclick="showView('shop')">Continue Shopping</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Slide-out Cart -->
+    <div id="cart-overlay" class="overlay" onclick="toggleCart()"></div>
+    <div id="cart-panel" class="cart-sidebar glass-card">
+        <div class="cart-header">
+            <h2>Shopping Cart</h2>
+            <button class="btn-close" onclick="toggleCart()">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+        </div>
+        <div class="cart-items-container" id="cart-items-container">
+            <div class="empty-cart-msg">Your cart is empty.</div>
+        </div>
+        <div class="cart-footer">
+            <div class="total-box">
+                <span>Subtotal:</span>
+                <span id="cart-sidebar-total" class="font-bold">$0.00</span>
+            </div>
+            <button class="btn btn-primary w-100" id="btn-to-checkout" onclick="goToCheckout()" disabled>Checkout</button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Item added to cart!</div>
+
+    <footer>
+        <div class="container text-center">
+            <div class="logo">NEX<span>BUY</span></div>
+            <p>&copy; 2026 NexBuy Inc. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
